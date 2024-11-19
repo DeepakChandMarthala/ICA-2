@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  namespace: flask-app-namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-app
+        image: deepakchandmarthala/ica2-new:v1
+        ports:
+        - containerPort: 5000
+        env:
+        - name: PGDB_HOST
+          value: "postgres-service"
+        - name: PGDB_USER
+          value: "postgres"
+        - name: PGDB_PASSWORD
+          value: "password" 
+        - name: PGDB_NAME
+          value: "mydatabase" 
+        - name: REDIS_HOST
+          value: "redis-service"
+
